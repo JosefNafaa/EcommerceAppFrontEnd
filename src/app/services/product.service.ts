@@ -25,14 +25,22 @@ export class ProductService {
     );
   }
 
-getProductCategories(): Observable<ProductCategory[]> {
-
-    return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
-      map(response => response._embedded.productCategory)
-    );
+  searchProduct(keyword : string) :Observable<Product[]>{
+   // need to build URL based on keyword
+  const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}`;
+   return this.httpClient.get<GetResponse>(searchUrl).pipe(
+    map(response => response._embedded.products)
+   );
   }
 
-}
+ getProductCategories(): Observable<ProductCategory[]> {
+
+     return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
+       map(response => response._embedded.productCategory)
+     );
+   }
+
+ }
 
 
 interface GetResponseProductCategory {
@@ -42,7 +50,6 @@ interface GetResponseProductCategory {
 }
 interface GetResponse {
   _embedded: {
-    [x: string]: any;
     products: Product[];
   }
 
