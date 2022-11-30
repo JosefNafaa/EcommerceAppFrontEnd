@@ -32,12 +32,12 @@ export class ProductDetailsComponent implements OnInit {
     );
   }
 
-  addToCart(theProduct: Product) {
+  addToCart() {
 
-    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+    console.log(`Adding to cart: ${this.product.name}, ${this.product.unitPrice}`);
 
      // TODO ... do the real work
-     const theCartItem = new CartItem(theProduct.id!, theProduct.name!, theProduct.imageUrl!, theProduct.unitPrice!);
+     const theCartItem = new CartItem(this.product.id!, this.product.name!, this.product.imageUrl!, this.product.unitPrice!);
      this.cartService.addToCart(theCartItem);
 
   }
