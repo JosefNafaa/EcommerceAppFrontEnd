@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -24,7 +26,8 @@ export class ProductListComponent implements OnInit {
   previousKeyword: string = "";
 
   constructor(private productService : ProductService,
-    public route: ActivatedRoute) { }
+              private cartService:CartService ,
+              public route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -35,7 +38,7 @@ export class ProductListComponent implements OnInit {
 
   searchProductList() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
-// if we have a different keyword than previous
+    // if we have a different keyword than previous
     // then set thePageNumber to 1
 
     if (this.previousKeyword != theKeyword) {
@@ -121,4 +124,13 @@ export class ProductListComponent implements OnInit {
     };
   }
 
+  addToCart(theProduct: Product) {
+
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+
+     // TODO ... do the real work
+     const theCartItem = new CartItem(theProduct.id!, theProduct.name!, theProduct.imageUrl!, theProduct.unitPrice!);
+     this.cartService.addToCart(theCartItem);
+
+  }
 }
