@@ -29,6 +29,7 @@ import {
 import { OktaAuth } from '@okta/okta-auth-js';
 
 import myAppConfig from './config/my-app-config';
+import { MembersPageComponent } from './components/members-page/members-page.component';
 
 const oktaConfig = myAppConfig.oidc;
 
@@ -44,7 +45,8 @@ const oktaAuth = new OktaAuth(myAppConfig.oidc); // the name variable must oktaA
     CartDetailsComponent,
     CheckoutComponent,
     LoginComponent,
-    LoginStatusComponent
+    LoginStatusComponent,
+    MembersPageComponent
   ],
   imports: [
     BrowserModule,
