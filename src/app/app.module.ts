@@ -5,7 +5,7 @@ import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr);
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductService } from './services/product.service';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
@@ -31,6 +31,7 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import myAppConfig from './config/my-app-config';
 import { MembersPageComponent } from './components/members-page/members-page.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 const oktaConfig = myAppConfig.oidc;
 
@@ -63,7 +64,7 @@ const oktaAuth = new OktaAuth(myAppConfig.oidc); // the name variable must oktaA
     useValue: 'fr-FR' // 'de-DE' for Germany, 'fr-FR' for France ...
   },
   {provide: OKTA_CONFIG, useValue: { oktaAuth }},
-
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     ProductService],
   bootstrap: [AppComponent]
 })
